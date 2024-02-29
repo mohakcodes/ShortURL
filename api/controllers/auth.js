@@ -60,4 +60,19 @@ const logout = async(req,res) => {
     }
 }
 
-module.exports = {signup,login,logout};
+const onrefresh = (req,res)=>{
+    let token = req.cookies.token;
+    // console.log(req.cookies.token);
+    if (token && token.startsWith("token=")) {
+        token = token.slice(6, token.length).trimLeft();
+    }
+    jwt.verify(token, process.env.SECRETKEY, {}, async(err,data)=>{
+        if(err){
+            return res.status(404).json(err);
+        }
+        console.log(data);
+        res.status(200).json(data);
+    })
+}
+
+module.exports = {signup,login,logout,onrefresh};

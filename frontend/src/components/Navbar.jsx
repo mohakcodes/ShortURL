@@ -1,24 +1,50 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { useUserStore } from '../utils/store'
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useUserStore } from '../utils/store';
 import axios from 'axios';
 
 const Navbar = () => {
-  
-  const {user,setUser} = useUserStore();
-  const username = user?.username;
+  const { user, setUser } = useUserStore();
+  const [loading, setLoading] = useState(true);
 
-  const handleLogout = async() => {
+  const getUser = async () => {
     try {
-        const res = await axios.get(`http://localhost:3000/auth/logout`,{
-          withCredentials:true,
-        })  
-        console.log(res);
-        setUser(null);
-    } 
-    catch (err) {
-        console.log(err);
+      const response = await axios.get(`http://localhost:3000/auth/refresh`, { withCredentials: true });
+      const userData = response.data;
+
+      setUser(userData);
+
+      console.log("User data:", userData);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    } finally {
+      setLoading(false);
     }
+  };
+
+  useEffect(() => {
+    console.log("called");
+    getUser();
+  }, []);
+
+  const username = user?.username;
+  console.log("username", username);
+
+  const handleLogout = async () => {
+    try {
+      const res = await axios.get(`http://localhost:3000/auth/logout`, {
+        withCredentials: true,
+      });
+      console.log(res);
+      setUser(null);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  if (loading) {
+    // You can render a loading spinner or message while user data is being fetched
+    return <div>Loading...</div>;
   }
 
   return (
@@ -64,7 +90,7 @@ const Navbar = () => {
                             <button
                             className="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
                             type="button"
-                            onClick={handleLogout}
+                            onClick={()=>handleLogout()}
                             >
                                 Logout
                             </button>
