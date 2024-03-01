@@ -1,5 +1,4 @@
 const URL = require("../models/url");
-const jwt = require("jsonwebtoken");
 
 const randomId = () => {
     const x = "abcdefghij1234567890";
@@ -21,23 +20,10 @@ const generateShortUrl = async(req,res) => {
         bodyurl = 'https://' + bodyurl;
     }
 
-    //check if user is logged in / not
-    let token = req.header("cookie");
-    console.log(req.headers['cookie']);
-    if(!token){
-        console.log("No token");
-    }
-    else{
-        if (token.startsWith("token=")) {
-            token = token.slice(6, token.length).trimLeft();
-        }
-        jwt.verify(token, process.env.SECRETKEY, async(err,data)=>{
-            if(err){
-                return res.status(403).json("Invalid Token");
-            }
-            console.log("data",data);
-        })
-    }
+    //check if user exists
+    let user = body.user;
+    user = user?.email || "";
+    console.log("this is user's mail-id",user);
 
     const shortId = randomId();
     try {
@@ -45,7 +31,7 @@ const generateShortUrl = async(req,res) => {
             shortId:shortId,
             longUrl:bodyurl,
             visitHistory:[],
-            ownerId:""
+            ownerId:user
         });
         return res.json({id:shortId});
     } 
@@ -102,7 +88,17 @@ const fetchStat = async(req,res) => {
 }
 
 const fetchStats = async(req,res) => {
-    console.log("ok");
+    try {
+        const {user} = req.body;
+        console.log("user->>>",user);
+        const userLinks = await URL.find({ ownerId: user.email });
+        console.log("UL",userLinks);
+        res.json({userLinks});
+    } 
+    catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 }
 
 module.exports = {generateShortUrl, fetchMainLink, fetchStat, fetchStats};

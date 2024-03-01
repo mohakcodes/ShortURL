@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import axios from "axios"
 import {CopyToClipboard} from "react-copy-to-clipboard"
+import { useUserStore } from '../utils/store'
 
 const Hero = () => {
 
   const [link, setLink] = useState("");
   const [shortId , setShortId] = useState();
   const [copied,setCopied] = useState(false);
+  const {user} = useUserStore();
 
   const addLink = async() => {
     if(link === ""){
@@ -16,6 +18,7 @@ const Hero = () => {
     try {
         const res = await axios.post("http://localhost:3000/url" , {
             url:link,
+            user:user,
         })
         setShortId(res.data.id);
     } catch (error) {

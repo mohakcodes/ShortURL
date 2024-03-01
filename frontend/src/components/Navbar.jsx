@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useUserStore } from '../utils/store';
 import axios from 'axios';
 
@@ -7,13 +7,13 @@ const Navbar = () => {
   const { user, setUser } = useUserStore();
   const [loading, setLoading] = useState(true);
 
+  const navigate = useNavigate();
+
   const getUser = async () => {
     try {
       const response = await axios.get(`http://localhost:3000/auth/refresh`, { withCredentials: true });
       const userData = response.data;
-
       setUser(userData);
-
       console.log("User data:", userData);
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -28,7 +28,6 @@ const Navbar = () => {
   }, []);
 
   const username = user?.username;
-  console.log("username", username);
 
   const handleLogout = async () => {
     try {
@@ -43,7 +42,6 @@ const Navbar = () => {
   };
 
   if (loading) {
-    // You can render a loading spinner or message while user data is being fetched
     return <div>Loading...</div>;
   }
 
@@ -60,8 +58,9 @@ const Navbar = () => {
                     {
                         user !== null ? (
                         <button
-                            className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-900 px-5 py-3 text-gray-500 transition hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:ring"
+                            className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-blue-300 border border-gray-900 px-5 py-3 text-gray-500 transition hover:bg-gray-50 hover:text-gray-700"
                             type="button"
+                            onClick={()=>navigate('/all-links')}
                         >
                             <span className="text-sm text-black font-medium"> View History </span>
 

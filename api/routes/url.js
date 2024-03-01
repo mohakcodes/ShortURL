@@ -5,6 +5,6 @@ const router = express.Router();
 router.post('/' , generateShortUrl);
 router.get('/:shortId' , fetchMainLink);
 router.get('/stats/:shortId' , fetchStat);
-router.get('/history' , fetchStats);
+router.post('/history' , fetchStats);
 
 module.exports = router;
