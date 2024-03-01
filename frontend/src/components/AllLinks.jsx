@@ -8,11 +8,10 @@ const AllLinks = () => {
   const [userLinks, setUserLinks] = useState([]);
   const [linkCopied, setLinkCopied] = useState([]);
   const {user} = useUserStore();
-  console.log(user);
 
   const fetchUserLinks = async () => {
     try {
-      const response = await axios.post('http://localhost:3000/url/history', {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/history`, {
         user: user,
       });
       setUserLinks(response.data.userLinks);
@@ -46,13 +45,13 @@ const AllLinks = () => {
       </div>
       <ul className='mx-auto text-center'>
         {userLinks.map((link) => (
-          <div className='w-[75%] mx-auto text-center' key={link.id}>
+          <div className='w-[75%] mx-auto text-center' key={link._id}>
             <article className="rounded-lg border border-gray-300 p-3 my-2">
 
               <p className="text-[12px] sm:text-[15px] text-gray-500 mb-2 overflow-hidden overflow-ellipsis">{link.longUrl}</p>
-              <p className="text-[12px] sm:text-[18px] font-medium text-gray-900 mb-2 overflow-hidden overflow-ellipsis">{`Short URL: http://localhost:3000/url/${link.shortId}`}</p>
+              <p className="text-[12px] sm:text-[18px] font-medium text-gray-900 mb-2 overflow-hidden overflow-ellipsis">{`Short URL: ${import.meta.env.VITE_API_URL}/${link.shortId}`}</p>
 
-              <CopyToClipboard text={`http://localhost:3000/url/${link.shortId}`} onCopy={()=>copyText(link._id)}>
+              <CopyToClipboard text={`${import.meta.env.VITE_API_URL}/${link.shortId}`} onCopy={()=>copyText(link._id)}>
                 <button className="bg-green-500 text-white py-2 px-4 rounded-md">
                   {linkCopied[link._id] ? "Copied" : "Copy Link"}
                 </button>

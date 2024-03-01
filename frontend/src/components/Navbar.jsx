@@ -11,7 +11,7 @@ const Navbar = () => {
 
   const getUser = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/auth/refresh`, { withCredentials: true });
+      const response = await axios.get(`${import.meta.env.VITE_API_AUTH}/refresh`, { withCredentials: true });
       const userData = response.data;
       setUser(userData);
       console.log("User data:", userData);
@@ -31,7 +31,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/auth/logout`, {
+      const res = await axios.get(`${import.meta.env.VITE_API_AUTH}/logout`, {
         withCredentials: true,
       });
       console.log(res);

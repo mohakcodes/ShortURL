@@ -16,7 +16,7 @@ const Hero = () => {
         return;
     }
     try {
-        const res = await axios.post("http://localhost:3000/url" , {
+        const res = await axios.post(`${import.meta.env.VITE_API_URL}` , {
             url:link,
             user:user,
         })
@@ -73,10 +73,10 @@ const Hero = () => {
                             <input 
                                 type="text" 
                                 className='w-[74%] p-4 bg-gray-200 text-black' 
-                                value={`http://localhost:3000/url/${shortId}`}
+                                value={`${import.meta.env.VITE_API_URL}/${shortId}`}
                                 readOnly
                             />
-                            <CopyToClipboard text={`http://localhost:3000/url/${shortId}`} onCopy={copyText}>
+                            <CopyToClipboard text={`${import.meta.env.VITE_API_URL}/${shortId}`} onCopy={copyText}>
                                 <button 
                                     className={`w-[25%] ${copied ? 'bg-teal-400' : 'bg-teal-200'} text-black sm:text-lg text-base`}
                                 >
