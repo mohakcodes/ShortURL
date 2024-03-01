@@ -13,8 +13,17 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+  const isEmailValid = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
   const handleLogin = async() => {
     try {
+      if(!isEmailValid(email)){
+        setError(true);
+        return;
+      }
       const res = await axios.post(`http://localhost:3000/auth/login` , {
         email,
         password,

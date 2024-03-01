@@ -11,8 +11,17 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
+  const isEmailValid = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
   const handleSubmit = async() => {
     if(username==="" || email==="" || password===""){
+      setError(true);
+      return;
+    }
+    if(!isEmailValid(email)){
       setError(true);
       return;
     }
