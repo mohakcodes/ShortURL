@@ -36,6 +36,7 @@ const Navbar = () => {
       });
       console.log(res);
       setUser(null);
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
@@ -62,7 +63,7 @@ const Navbar = () => {
                             type="button"
                             onClick={()=>navigate('/all-links')}
                         >
-                            <span className="text-sm text-black font-medium"> View History </span>
+                            <span className="text-sm text-black font-medium"> My Links </span>
 
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
