@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUserStore } from '../utils/store';
 import axios from 'axios';
+import { API_AUTH } from '../constants';
 
 const Navbar = () => {
   const { user, setUser } = useUserStore();
@@ -11,10 +12,9 @@ const Navbar = () => {
 
   const getUser = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_AUTH}/refresh`, { withCredentials: true });
+      const response = await axios.get(`${API_AUTH}/refresh`, { withCredentials: true });
       const userData = response.data;
       setUser(userData);
-      console.log("User data:", userData);
     } catch (error) {
       console.error("Error fetching user data:", error);
     } finally {
@@ -23,7 +23,6 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    console.log("called");
     getUser();
   }, []);
 
@@ -31,7 +30,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_AUTH}/logout`, {
+      const res = await axios.get(`${API_AUTH}/logout`, {
         withCredentials: true,
       });
       console.log(res);
@@ -51,8 +50,9 @@ const Navbar = () => {
         <header>
             <div className="mx-auto max-w-screen-xl px-4 sm:py-4 py-6 sm:px-6 lg:px-8">
                 <div className="sm:flex sm:items-center sm:justify-between">
-                <div className="text-center sm:text-left">
-                    <h1 className="text-2xl font-bold text-gray-900 sm:text-2xl">{`Welcome ${username !== undefined ? username : 'User'}`}</h1>
+                <div className="text-center sm:text-left">                  
+                    <h1 className="text-2xl font-bold text-red-700 sm:text-2xl">{`Shortify`}</h1>
+                    <h1 className="text-xl font-bold text-gray-900 sm:text-xl">{`${username !== undefined ? 'Welcome '+username : ''}`}</h1>
                 </div>
 
                 <div className="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">

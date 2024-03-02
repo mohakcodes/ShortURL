@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import axios from "axios";
 import { useUserStore } from '../utils/store';
+import { API_AUTH } from '../constants';
 
 const Login = () => {
 
@@ -24,7 +25,7 @@ const Login = () => {
         setError(true);
         return;
       }
-      const res = await axios.post(`${import.meta.env.VITE_API_AUTH}/login` , {
+      const res = await axios.post(`${API_AUTH}/login` , {
         email,
         password,
       },{

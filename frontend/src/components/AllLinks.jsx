@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useUserStore } from '../utils/store'
 import axios from 'axios';
 import {CopyToClipboard} from 'react-copy-to-clipboard'
+import {API_URL} from '../constants'
 
 const AllLinks = () => {
 
@@ -11,7 +12,7 @@ const AllLinks = () => {
 
   const fetchUserLinks = async () => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/history`, {
+      const response = await axios.post(`${API_URL}/history`, {
         user: user,
       });
       setUserLinks(response.data.userLinks);
@@ -49,9 +50,9 @@ const AllLinks = () => {
             <article className="rounded-lg border border-gray-300 p-3 my-2">
 
               <p className="text-[12px] sm:text-[15px] text-gray-500 mb-2 overflow-hidden overflow-ellipsis">{link.longUrl}</p>
-              <p className="text-[12px] sm:text-[18px] font-medium text-gray-900 mb-2 overflow-hidden overflow-ellipsis">{`Short URL: ${import.meta.env.VITE_API_URL}/${link.shortId}`}</p>
+              <p className="text-[12px] sm:text-[18px] font-medium text-gray-900 mb-2 overflow-hidden overflow-ellipsis">{`Short URL: ${API_URL}/${link.shortId}`}</p>
 
-              <CopyToClipboard text={`${import.meta.env.VITE_API_URL}/${link.shortId}`} onCopy={()=>copyText(link._id)}>
+              <CopyToClipboard text={`${API_URL}/${link.shortId}`} onCopy={()=>copyText(link._id)}>
                 <button className="bg-green-500 text-white py-2 px-4 rounded-md">
                   {linkCopied[link._id] ? "Copied" : "Copy Link"}
                 </button>

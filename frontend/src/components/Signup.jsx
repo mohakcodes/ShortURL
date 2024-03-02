@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import axios from "axios";
+import { API_AUTH } from '../constants';
 
 const SignUp = () => {
 
@@ -26,7 +27,7 @@ const SignUp = () => {
       return;
     }
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_AUTH}/signup` , {
+      const res = await axios.post(`${API_AUTH}/signup` , {
         username,
         email,
         password,

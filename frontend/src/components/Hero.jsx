@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from "axios"
 import {CopyToClipboard} from "react-copy-to-clipboard"
 import { useUserStore } from '../utils/store'
+import {API_URL} from '../constants'
 
 const Hero = () => {
 
@@ -16,7 +17,7 @@ const Hero = () => {
         return;
     }
     try {
-        const res = await axios.post(`${import.meta.env.VITE_API_URL}` , {
+        const res = await axios.post(`${API_URL}` , {
             url:link,
             user:user,
         })
@@ -73,10 +74,10 @@ const Hero = () => {
                             <input 
                                 type="text" 
                                 className='w-[74%] p-4 bg-gray-200 text-black' 
-                                value={`${import.meta.env.VITE_API_URL}/${shortId}`}
+                                value={`${API_URL}/${shortId}`}
                                 readOnly
                             />
-                            <CopyToClipboard text={`${import.meta.env.VITE_API_URL}/${shortId}`} onCopy={copyText}>
+                            <CopyToClipboard text={`${API_URL}/${shortId}`} onCopy={copyText}>
                                 <button 
                                     className={`w-[25%] ${copied ? 'bg-teal-400' : 'bg-teal-200'} text-black sm:text-lg text-base`}
                                 >
