@@ -23,17 +23,12 @@
 
 To run this project, you will need to add the following environment variables to your .env file
 
-Frontend
-
-`VITE_API_URL`
-`VITE_API_AUTH`
-
 Backend
 
 `PORT`
 `MONGO_URI`
 `SECRETKEY`
 `ORIGIN`
-## Authors
+## Author
 
 [@mohakcodes](https://www.github.com/MOHAKCODES)
