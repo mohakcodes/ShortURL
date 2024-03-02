@@ -1,5 +1,5 @@
 
-# ShortURL
+# Shortify
 
 - Description: Developed a URL shortening application using a tech stack comprising React, MongoDB, HyperUI, and Zustand for efficient state management.
 
